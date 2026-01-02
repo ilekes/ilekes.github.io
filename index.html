@@ -1,0 +1,387 @@
+<!-- =========================================================
+ SGI ILEKES MINI COURSE — INDEX
+ File: index.html
+ Notes:
+  - Put this file in the SAME folder as:
+      week-1-eshu.html
+      week-2-obatala.html
+      week-3-oshun.html
+      week-4-yemoja.html
+      week-5-shango.html
+      week-6-ogun.html
+      week-7-oya.html
+      week-8-orunmila.html
+  - And your images:
+      eshu-ileke.png
+      ogun-ileke.png
+      ileke-oya.png
+      ileke-orunmila.png
+      ileke-red-white.png
+      ileke-blue-white.png
+      ileke-yellow-gold.png
+      ileke-white-crystal.png
+      ileke-multicolor-red-black-green-yellow.png (optional)
+      plus the tn_*.png thumbnails if you use them
+========================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>SwamiG Institute — Ilekes Mini Course (8 Weeks)</title>
+  <meta name="description" content="SwamiG Institute — Ilekes Mini Course: one ileke per week. Sacred bead ethics, identification, permissions, care, and weekly reflection." />
+
+  <style>
+    :root{
+      --bg:#0b0b0f; --ink:#f3f4f6; --muted:#bfc3d1;
+      --card:rgba(20,20,28,.92); --soft:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --accent:#bb66ff; --accent2:#ffd166;
+      --ring:rgba(187,102,255,.35);
+      --ok:#4ade80; --warn:#fbbf24;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:
+        radial-gradient(900px 520px at 20% -10%, rgba(187,102,255,.22), transparent 55%),
+        radial-gradient(900px 520px at 90% 10%, rgba(255,209,102,.18), transparent 55%),
+        radial-gradient(900px 520px at 50% 110%, rgba(187,102,255,.14), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font:16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.2px;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 18px 60px;}
+
+    /* Top cards (SGI style) */
+    .topcards{
+      display:grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap:10px;
+      margin:10px auto 16px;
+      align-items:stretch;
+      justify-items:stretch;
+    }
+    .topcards a{
+      text-decoration:none;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:14px;
+      padding:10px 10px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .topcards a:hover{
+      transform:translateY(-1px);
+      border-color:rgba(187,102,255,.45);
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    }
+    .pill{display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:13px; color:var(--ink); letter-spacing:.25px;}
+    .dot{width:10px; height:10px; border-radius:999px; background:var(--accent); box-shadow:0 0 0 6px rgba(187,102,255,.16);}
+
+    /* Header / Hero */
+    header{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(20,20,28,.96), rgba(20,20,28,.84));
+      border-radius:var(--radius);
+      padding:22px 18px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    header:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(700px 380px at 15% 10%, rgba(187,102,255,.18), transparent 55%),
+        radial-gradient(700px 380px at 85% 20%, rgba(255,209,102,.14), transparent 55%);
+      pointer-events:none;
+      filter:saturate(1.05);
+    }
+    .hero{position:relative; display:flex; gap:18px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .brand{display:flex; align-items:center; gap:14px; min-width: 260px;}
+    h1{margin:0; font-size:26px; letter-spacing:.2px;}
+    .sub{margin:6px 0 0; color:var(--muted); max-width: 760px;}
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
+    .badge{border:1px solid var(--border); background:rgba(255,255,255,.05); padding:6px 10px; border-radius:999px; font-size:13px; color:var(--muted);}
+    .badge strong{color:var(--ink)}
+    .cta{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;}
+    .btn{
+      text-decoration:none;
+      border:1px solid rgba(187,102,255,.55);
+      background:linear-gradient(180deg, rgba(187,102,255,.22), rgba(187,102,255,.10));
+      padding:10px 12px;
+      border-radius:14px;
+      font-weight:800;
+      color:var(--ink);
+      letter-spacing:.2px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+      transition:transform .15s ease, filter .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn:hover{transform:translateY(-1px); filter:saturate(1.05); border-color:rgba(255,209,102,.55)}
+    .btn.secondary{border-color:rgba(255,255,255,.16); background:rgba(255,255,255,.04); font-weight:700; color:var(--muted);}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.35fr .95fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    .card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(20,20,28,.92), rgba(20,20,28,.78));
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size:12px; letter-spacing:.28px; text-transform:uppercase;
+      color:var(--muted); margin-bottom:10px;
+    }
+    .kicker .line{width:28px; height:1px; background:rgba(255,255,255,.18);}
+    .note{
+      border:1px dashed rgba(255,255,255,.18);
+      background:rgba(255,255,255,.03);
+      padding:12px;
+      border-radius:14px;
+      color:var(--muted);
+      margin-top:12px;
+    }
+    .note strong{color:var(--ink)}
+
+    /* Week tiles */
+    .weeks{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    .week{
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 12px 34px rgba(0,0,0,.32);
+      transition:transform .15s ease, border-color .15s ease;
+      display:block;
+    }
+    .week:hover{transform:translateY(-1px); border-color:rgba(187,102,255,.42)}
+    .week .img{
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      display:block;
+      background:rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .week .meta{padding:10px 12px 12px;}
+    .week .meta b{display:block}
+    .week .meta span{display:block; margin-top:2px; font-size:13px; color:var(--muted)}
+    .tag{display:inline-block; margin-top:8px; font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); padding:4px 8px; border-radius:999px;}
+
+    /* Sidebar list */
+    .list{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:6px 0}
+
+    .footer{
+      margin-top:16px;
+      text-align:center;
+      color:rgba(243,244,246,.55);
+      font-size:12px;
+      letter-spacing:.25px;
+    }
+
+    @media (max-width: 980px){
+      .topcards{grid-template-columns: repeat(3, minmax(0, 1fr));}
+      .grid{grid-template-columns:1fr}
+      .cta{justify-content:flex-start}
+      .weeks{grid-template-columns:1fr}
+    }
+    @media (max-width: 520px){
+      .topcards{grid-template-columns: repeat(2, minmax(0, 1fr));}
+      h1{font-size:22px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- SGI Top Cards -->
+    <nav class="topcards" aria-label="SGI Quick Links">
+      <a href="https://4cowrieshell.com/index0" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> 4-Cowrie</span></a>
+      <a href="https://16cowrie.com" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> 16-Cowrie</span></a>
+      <a href="https://myopele.com" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> Opele</span></a>
+      <a href="https://iamiyawo.com" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> Iyawo Track</span></a>
+      <a href="https://iamaborisha.com" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> Obi Orisha</span></a>
+      <a href="https://swamiginstitute.com" target="_blank" rel="noopener"><span class="pill"><span class="dot"></span> SwamiG</span></a>
+    </nav>
+
+    <!-- Hero -->
+    <header>
+      <div class="hero">
+        <div class="brand">
+          <a href="SwamiG.gif"><img src="tn_SwamiG.gif" width="50" height="50" alt="SGI" /></a>
+          <div>
+            <h1>Ilekes Mini Course — 8 Weeks (1 Ileke per Week)</h1>
+            <div class="sub">
+              A paced study of sacred beads: meaning, ethics, care, permissions, and weekly reflection.
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLScz4rQ5augcbNsaP7xyIJmXsOK28GQINZnVW4nlhASmb-y7Vw/viewform?usp=header" target="_blank" rel="noopener" style="color:#ff532c; font-weight:800; text-decoration:none;">Application</a>
+            </div>
+            <div class="badges">
+              <div class="badge">Pace: <strong>1 week each</strong></div>
+              <div class="badge">Focus: <strong>Ethics + Identification</strong></div>
+              <div class="badge">Format: <strong>Self-Guided + Review</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta">
+          <a class="btn" href="#weeks">Start Week 1</a>
+          <a class="btn secondary" href="#how">How it Works</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+
+      <main class="card">
+        <div id="how" class="kicker"><span class="line"></span> How This Course Works <span class="line"></span></div>
+        <h2>Course Flow</h2>
+        <p style="color:var(--muted)">
+          Each week you focus on <strong>one</strong> ileke: colors, function, etiquette, permissions, and care.
+          You complete the weekly reflection and a small self-check. This course is educational (lineage patterns remain house-specific).
+        </p>
+
+        <div class="note">
+          <strong>Teaching disclaimer:</strong> images are for identification and study. Consecration protocols, bead counts, and house patterns are not displayed.
+        </div>
+
+        <div id="weeks" class="kicker" style="margin-top:18px;"><span class="line"></span> Weekly Lessons <span class="line"></span></div>
+
+        <section class="weeks" aria-label="Weekly ileke lessons">
+
+          <a class="week" href="week-1-eshu.html">
+            <img class="img" src="eshu-ileke.png" alt="Eshu ileke (red & black)" loading="lazy">
+            <div class="meta">
+              <b>Week 1 — Èṣù / Eshu (Elegba)</b>
+              <span>Red & Black • Roads, openings, alignment</span>
+              <span class="tag">Start here</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-2-obatala.html">
+            <img class="img" src="ileke-white-crystal.png" alt="Obatala ileke (white)" loading="lazy">
+            <div class="meta">
+              <b>Week 2 — Obatala</b>
+              <span>White • Clarity, ethics, coolness</span>
+              <span class="tag">Purity & restraint</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-3-oshun.html">
+            <img class="img" src="ileke-yellow-gold.png" alt="Oshun ileke (yellow/gold)" loading="lazy">
+            <div class="meta">
+              <b>Week 3 — Ọ̀ṣun / Oshun</b>
+              <span>Yellow/Gold • Sweetness, abundance</span>
+              <span class="tag">Ase of attraction</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-4-yemoja.html">
+            <img class="img" src="ileke-blue-white.png" alt="Yemoja ileke (blue & white)" loading="lazy">
+            <div class="meta">
+              <b>Week 4 — Yemọja / Yemaya</b>
+              <span>Blue & White • Protection, motherhood</span>
+              <span class="tag">Emotional steadiness</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-5-shango.html">
+            <img class="img" src="ileke-red-white.png" alt="Shango ileke (red & white)" loading="lazy">
+            <div class="meta">
+              <b>Week 5 — Ṣàngó / Shango</b>
+              <span>Red & White • Justice, authority</span>
+              <span class="tag">Right action</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-6-ogun.html">
+            <img class="img" src="ogun-ileke.png" alt="Ogun ileke (green & black)" loading="lazy">
+            <div class="meta">
+              <b>Week 6 — Ògún / Ogun</b>
+              <span>Green & Black • Work, iron, discipline</span>
+              <span class="tag">Commitment</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-7-oya.html">
+            <img class="img" src="ileke-oya.png" alt="Oya ileke (purple/brown tones)" loading="lazy">
+            <div class="meta">
+              <b>Week 7 — Ọya / Oya</b>
+              <span>Purple/Brown • Change, ancestors</span>
+              <span class="tag">Transformation</span>
+            </div>
+          </a>
+
+          <a class="week" href="week-8-orunmila.html">
+            <img class="img" src="ileke-orunmila.png" alt="Orunmila ileke (green & yellow)" loading="lazy">
+            <div class="meta">
+              <b>Week 8 — Òrúnmìlà / Orunmila (Ifá)</b>
+              <span>Green & Yellow • Wisdom, destiny</span>
+              <span class="tag">Authorization emphasis</span>
+            </div>
+          </a>
+
+        </section>
+      </main>
+
+      <aside class="card">
+        <div class="kicker"><span class="line"></span> Requirements <span class="line"></span></div>
+        <h2>Weekly Requirements</h2>
+        <ul class="list">
+          <li>Study the week’s ileke image + meaning</li>
+          <li>Complete the weekly reflection (download/copy)</li>
+          <li>Pass the quick self-check (checkboxes)</li>
+          <li>Optional: submit to SGI review</li>
+        </ul>
+
+        <div class="note">
+          <strong>Course outcome:</strong> you can identify common ilekes, explain ethics/authority, and demonstrate correct handling.
+        </div>
+
+        <div class="kicker" style="margin-top:16px;"><span class="line"></span> Suggested Review <span class="line"></span></div>
+        <h2>Review Rhythm</h2>
+        <ul class="list">
+          <li>Day 1–2: meaning + etiquette</li>
+          <li>Day 3–4: permissions + care</li>
+          <li>Day 5: personal reflection</li>
+          <li>Day 6–7: recap + quiz self-check</li>
+        </ul>
+
+        <a class="btn secondary" href="week-1-eshu.html" style="margin-top:8px; justify-content:center;">Go to Week 1</a>
+      </aside>
+
+    </div>
+
+    <div class="footer">
+      <em>SwamiG Institute • Ilekes Mini Course</em>
+      <span style="opacity:.7;"> — governed by Sebek (+) Otura</span>
+    </div>
+  </div>
+</body>
+</html>
