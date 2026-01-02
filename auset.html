@@ -1,0 +1,890 @@
+<!-- =========================================================
+ SGI Public Course (SGI Styled) — Auset x Ileke (with Eshu)
+ File: auset-ileke-8week.html
+ Notes:
+  - Public-facing (no initiatory secrets / no ritual details).
+  - Works as a single static HTML file (GitHub Pages / Cloudflare Pages).
+  - Includes: SGI top cards, collapsible weeks, optional progress tracker (localStorage).
+========================================================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>SwamiG Institute — Auset × Ileke (with Eshu) — 8-Week Public Course</title>
+  <meta name="description" content="SwamiG Institute public course: Auset (Khemetian devotion) correlated with 8 Ileke (Ifá) with Eshu as Gatekeeper. 8-week ethical alignment + devotion framework." />
+
+  <!-- Optional: Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0f; --ink:#f3f4f6; --muted:#bfc3d1;
+      --card:rgba(20,20,28,.92); --soft:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --accent:#bb66ff; --accent2:#ffd166; --ok:#4ade80; --warn:#fbbf24; --bad:#fb7185;
+      --ring:rgba(187,102,255,.35);
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(187,102,255,.20), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(255,209,102,.16), transparent 55%),
+        radial-gradient(900px 700px at 30% 110%, rgba(74,222,128,.12), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      font: 16px/1.6 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px 16px 60px}
+
+    /* Top cards (SGI style) */
+    .topnav{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:10px;
+      margin: 10px 0 18px;
+    }
+    .pill{
+      display:flex;align-items:center;justify-content:center;
+      text-decoration:none;
+      padding:10px 12px;
+      border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      box-shadow: 0 8px 22px rgba(0,0,0,.22);
+      color: var(--ink);
+      font-weight:700;
+      letter-spacing:.2px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .pill:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.22)}
+    .pill small{opacity:.9;font-weight:600}
+    @media (max-width: 980px){
+      .topnav{grid-template-columns: repeat(3, 1fr)}
+    }
+    @media (max-width: 520px){
+      .topnav{grid-template-columns: repeat(2, 1fr)}
+    }
+
+    /* Hero */
+    header.hero{
+      position:relative;
+      padding: 26px 18px 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    header.hero:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(520px 240px at 20% 20%, rgba(187,102,255,.18), transparent 60%),
+        radial-gradient(520px 240px at 80% 10%, rgba(255,209,102,.14), transparent 60%);
+      pointer-events:none;
+    }
+    .heroGrid{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:center;
+    }
+    @media (max-width: 900px){
+      .heroGrid{grid-template-columns:1fr}
+    }
+    .brand{
+      display:flex;align-items:center;gap:14px;
+    }
+    .logoDot{
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(180deg, rgba(187,102,255,.35), rgba(255,209,102,.18));
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      position:relative;
+      overflow:hidden;
+    }
+    /* subtle animated glint */
+    .logoDot:after{
+      content:"";
+      position:absolute; top:-60%; left:-60%;
+      width:160%; height:160%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.20), transparent 55%);
+      transform: rotate(25deg);
+      animation: glint 6.5s ease-in-out infinite;
+      opacity:.65;
+    }
+    @keyframes glint{
+      0%,100%{transform: translate(-10%, -10%) rotate(25deg)}
+      50%{transform: translate(18%, 18%) rotate(25deg)}
+    }
+    h1{
+      font-family: "Libre Baskerville", Georgia, serif;
+      margin: 0 0 8px;
+      font-size: clamp(26px, 3.2vw, 40px);
+      letter-spacing:.2px;
+    }
+    .tagline{color:var(--muted);margin:0 0 12px}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      font-weight:700;
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .badge i{
+      width:10px;height:10px;border-radius:99px;display:inline-block;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(187,102,255,.15);
+    }
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .btn{
+      text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(187,102,255,.26), rgba(255,255,255,.05));
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+      font-weight:800;
+      letter-spacing:.2px;
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.22)}
+    .btn.secondary{
+      background: linear-gradient(180deg, rgba(255,209,102,.18), rgba(255,255,255,.04));
+      font-weight:800;
+    }
+
+    /* Right card */
+    .panel{
+      position:relative;
+      background: rgba(0,0,0,.18);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    }
+    .panel h3{margin:0 0 8px;font-size:15px;letter-spacing:.2px}
+    .panel p{margin:0;color:var(--muted);font-size:14px}
+    .kpiRow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .kpi{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      padding:10px;
+    }
+    .kpi b{display:block;font-size:18px}
+    .kpi span{color:var(--muted);font-size:12px}
+
+    /* Content cards */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .head{
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+      padding: 14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      gap:10px;
+    }
+    .card .head .title{
+      display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+    }
+    .card .head h2{margin:0;font-size:18px}
+    .card .head .meta{color:var(--muted);font-size:13px}
+    .card .body{padding: 12px 14px 14px}
+    .soft{
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+    .cols{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 860px){.cols{grid-template-columns:1fr}}
+    ul{margin:8px 0 0 18px}
+    li{margin:4px 0}
+    .hr{height:1px;background:rgba(255,255,255,.10);margin:12px 0}
+
+    /* Week accordion */
+    details.week{
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    details.week + details.week{margin-top:10px}
+    details.week summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 12px 12px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      user-select:none;
+    }
+    details.week summary::-webkit-details-marker{display:none}
+    .wLeft{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .wkNum{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      background: rgba(187,102,255,.18);
+      border:1px solid rgba(187,102,255,.35);
+      box-shadow: 0 0 0 8px rgba(187,102,255,.10);
+      font-weight:900;
+    }
+    .wkTitle{font-weight:900}
+    .wkTags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{
+      font-size:12px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-weight:700;
+    }
+    .wRight{display:flex;align-items:center;gap:10px}
+    .chk{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;font-weight:800;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .chk input{accent-color: var(--accent); width:16px; height:16px}
+    .weekBody{padding: 0 12px 12px}
+    .weekBody .soft{margin-top:0}
+    .note{color:var(--muted);font-size:13px;margin:0}
+
+    /* Footer */
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(255,255,255,.45);
+      font-size: 12px;
+    }
+    .footline{opacity:.55}
+    .tiny{opacity:.35;font-size:11px;margin-top:8px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- SGI Top Cards -->
+    <nav class="topnav" aria-label="SwamiG Institute links">
+      <a class="pill" href="https://swamiginstitute.com" target="_blank" rel="noopener">SGI</a>
+      <a class="pill" href="https://16cowrie.com" target="_blank" rel="noopener">16Cowrie</a>
+      <a class="pill" href="https://4cowrieshell.com" target="_blank" rel="noopener">4Cowrie</a>
+      <a class="pill" href="https://myopele.com" target="_blank" rel="noopener">Opele</a>
+      <a class="pill" href="https://iamiyawo.com" target="_blank" rel="noopener">Iyawo</a>
+      <a class="pill" href="https://iamaborisha.com" target="_blank" rel="noopener">Obi/Orisha</a>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="heroGrid">
+        <div>
+          <div class="brand">
+            <div class="logoDot" aria-hidden="true"></div>
+            <div>
+              <div class="tagline" style="margin:0 0 4px"><b>SwamiG Institute</b> • Public Course</div>
+              <h1>Auset × Ileke (with Eshu)</h1>
+            </div>
+          </div>
+
+          <p class="tagline">
+            An 8-week public devotional framework correlating <b>Auset (Khemetian devotion / Metu Neter)</b> with
+            <b>8 Ileke (Ifá)</b>, with <b>Eshu</b> as the gatekeeper of ethics, speech, and consequence.
+          </p>
+
+          <div class="badges">
+            <span class="badge"><i></i> Public-Friendly • No Secrets</span>
+            <span class="badge"><i style="background:var(--accent2);box-shadow:0 0 0 6px rgba(255,209,102,.14)"></i> 8 Weeks • 1 Theme/Week</span>
+            <span class="badge"><i style="background:var(--ok);box-shadow:0 0 0 6px rgba(74,222,128,.12)"></i> Ethical Alignment • Character</span>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="#course">Jump to Course</a>
+            <a class="btn secondary" href="#progress">Progress Tracker</a>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <h3>Course Outcomes (Public)</h3>
+          <p>
+            Learn a disciplined devotional rhythm: <b>intuition</b> (Auset), <b>ethical conduct</b> (Ileke),
+            and <b>accountability</b> (Eshu) — expressed as consistent daily practice and improved character.
+          </p>
+          <div class="kpiRow">
+            <div class="kpi"><b>8</b><span>Weeks</span></div>
+            <div class="kpi"><b>1</b><span>Theme per week</span></div>
+            <div class="kpi"><b>7</b><span>Daily reflections</span></div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <!-- Course Intro -->
+    <section class="grid" id="course">
+      <div class="card">
+        <div class="head">
+          <div class="title">
+            <h2>How This Course Works</h2>
+            <div class="meta">A public devotion + character curriculum (SGI style)</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="cols">
+            <div class="soft">
+              <b>Three Pillars</b>
+              <ul>
+                <li><b>Auset</b>: devotion that refines intuition (the “inner knowing”).</li>
+                <li><b>Ileke</b>: visible commitment to ethical conduct (behavior alignment).</li>
+                <li><b>Eshu</b>: gatekeeper of speech, roads, consequences (accountability).</li>
+              </ul>
+            </div>
+            <div class="soft">
+              <b>Public-Safe Practices</b>
+              <ul>
+                <li>Breath, stillness, journaling, and ethical vows.</li>
+                <li>No offerings, no ritual instructions, no “secret” formulas.</li>
+                <li>Focus on character, clarity, and responsible speech/action.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="soft">
+            <b>Eshu Principle (Governs ALL 8 Weeks)</b>
+            <p class="note">
+              Eshu is included as the <b>gatekeeper</b> — meaning each week is measured by:
+              <b>truthful speech</b>, <b>clear intention</b>, and <b>acceptance of consequence</b>.
+              In public format: this becomes an ethics vow and a communication discipline.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Tracker -->
+      <div class="card" id="progress">
+        <div class="head">
+          <div class="title">
+            <h2>Progress Tracker</h2>
+            <div class="meta">Optional • saved locally in your browser</div>
+          </div>
+          <div class="meta" id="pctLabel">0% complete</div>
+        </div>
+        <div class="body">
+          <div class="soft">
+            <b>How to use:</b>
+            <ul>
+              <li>Open each week below, read the focus, and commit to the public-safe daily practice.</li>
+              <li>Check the box when you complete the week.</li>
+              <li>Your progress stays on this device (localStorage).</li>
+            </ul>
+            <div class="actions" style="margin-top:12px">
+              <button class="btn" type="button" id="resetBtn" style="cursor:pointer">Reset Progress</button>
+              <a class="btn secondary" href="#weeks">Start Week 1</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weeks -->
+      <div class="card" id="weeks">
+        <div class="head">
+          <div class="title">
+            <h2>The 8 Weeks</h2>
+            <div class="meta">Auset principles correlated to Ileke themes (with Eshu governing movement)</div>
+          </div>
+        </div>
+
+        <div class="body">
+          <!-- Week 1 -->
+          <details class="week" open>
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">1</div>
+                <div>
+                  <div class="wkTitle">Intuitional Wisdom</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: Inner knowing</span>
+                    <span class="tag">Ileke: Orunmila (destiny)</span>
+                    <span class="tag">Eshu: message clarity</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk" title="Mark week complete">
+                  <input type="checkbox" data-week="1" /> Complete
+                </label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> strengthen inner guidance (without rushing).</li>
+                  <li><b>Color inspiration:</b> green / yellow (growth + illumination).</li>
+                  <li><b>Body relation:</b> “Ori” (inner head) / attention / stillness.</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice (10–15 min)</b>
+                  <ul>
+                    <li>Quiet breathing + one question: “What truth am I avoiding?”</li>
+                    <li>Write 5 lines: what your best self would do today.</li>
+                    <li>One intentional decision (no impulsive action).</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>Speak only what you can stand behind.</li>
+                    <li>No exaggeration, no “testing people,” no baiting.</li>
+                    <li>Observe consequence without blaming others.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 2 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">2</div>
+                <div>
+                  <div class="wkTitle">Devotional Discipline</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: purification</span>
+                    <span class="tag">Ileke: Obatala (clarity)</span>
+                    <span class="tag">Eshu: sincerity test</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="2" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> simplify life to hear spirit more clearly.</li>
+                  <li><b>Color inspiration:</b> white (clean conduct).</li>
+                  <li><b>Season:</b> winter energy (inner refinement).</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Declutter one thing (space, schedule, or mind).</li>
+                    <li>Silence window: 20 minutes/day (no media).</li>
+                    <li>Write: “What habit weakens my character?”</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>Do not pretend to be “pure.” Be honest and steady.</li>
+                    <li>Speak less. Keep promises.</li>
+                    <li>Let actions prove devotion.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 3 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">3</div>
+                <div>
+                  <div class="wkTitle">Sacred Speech</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: power of word</span>
+                    <span class="tag">Ileke: Oshun (sweetness)</span>
+                    <span class="tag">Eshu: consequence of speech</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="3" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> your words build or break reality.</li>
+                  <li><b>Color inspiration:</b> gold / honey (kind influence).</li>
+                  <li><b>Body relation:</b> throat (expression) + heart (tone).</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Before speaking: “Is it true? Is it necessary? Is it kind?”</li>
+                    <li>One repair conversation per week (apology or clarification).</li>
+                    <li>Write 3 affirmations you can honestly embody.</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>No gossip. No “hidden insults.”</li>
+                    <li>Say what you mean, mean what you say.</li>
+                    <li>Accept outcomes of your words.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 4 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">4</div>
+                <div>
+                  <div class="wkTitle">Re-membering the Self</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: restore Ausar</span>
+                    <span class="tag">Ileke: Ogun (paths)</span>
+                    <span class="tag">Eshu: road opens with effort</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="4" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> rebuild what is broken through steady action.</li>
+                  <li><b>Color inspiration:</b> green / black (growth + discipline).</li>
+                  <li><b>Season:</b> spring→summer threshold (renewal into strength).</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>15 minutes physical discipline (walk / stretch / strength).</li>
+                    <li>Choose one “unfinished thing” and complete it this week.</li>
+                    <li>Write: “What do I need to repair in my life?”</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>No excuses. Track effort.</li>
+                    <li>Stop blaming “the road.” Become the road-maker.</li>
+                    <li>Show consistency; then watch openings appear.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 5 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">5</div>
+                <div>
+                  <div class="wkTitle">Spiritual Motherhood</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: nurture</span>
+                    <span class="tag">Ileke: Yemọja (healing)</span>
+                    <span class="tag">Eshu: emotional honesty</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="5" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> care for the inner life; heal emotional memory.</li>
+                  <li><b>Color inspiration:</b> blue / white (calm + cleansing).</li>
+                  <li><b>Body relation:</b> breath + hydration + rest.</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Water intention: drink water mindfully (30–60 seconds).</li>
+                    <li>Journal: “What feeling needs compassion, not judgment?”</li>
+                    <li>One nurturing act (self-care or care for others).</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>No emotional manipulation.</li>
+                    <li>Speak needs directly (without blame).</li>
+                    <li>Choose healing over reaction.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 6 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">6</div>
+                <div>
+                  <div class="wkTitle">Protection of the Awakened Will</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: guardianship</span>
+                    <span class="tag">Ileke: Oya (change)</span>
+                    <span class="tag">Eshu: decisive movement</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="6" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> protect your growth with boundaries.</li>
+                  <li><b>Color inspiration:</b> purple / burgundy (transformative power).</li>
+                  <li><b>Season:</b> autumn (release + reorientation).</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Write one boundary you will keep today.</li>
+                    <li>Remove one source of stagnation (small but real).</li>
+                    <li>Breath practice: 4-4-6 breathing (3 rounds).</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>No “half-truths.” Boundaries require clarity.</li>
+                    <li>Do not chase what disrespects you.</li>
+                    <li>Choose the road that honors your destiny.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 7 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">7</div>
+                <div>
+                  <div class="wkTitle">Veiled Wisdom & Ancestral Memory</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: mysteries</span>
+                    <span class="tag">Ileke: Egungun (lineage)</span>
+                    <span class="tag">Eshu: interpretation of signs</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="7" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> learn by observation; respect lineage and elders.</li>
+                  <li><b>Color inspiration:</b> earth tones / multi (heritage + community).</li>
+                  <li><b>Body relation:</b> posture + patience + listening.</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Record a dream or symbol (even one sentence).</li>
+                    <li>Write: “What lesson keeps repeating in my life?”</li>
+                    <li>Learn one story from family history (ask or reflect).</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>Don’t rush to “decode” everything. Be patient with meaning.</li>
+                    <li>No inventing facts. Keep interpretation humble.</li>
+                    <li>Honor elders, ancestors, and the truth.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Week 8 -->
+          <details class="week">
+            <summary>
+              <div class="wLeft">
+                <div class="wkNum">8</div>
+                <div>
+                  <div class="wkTitle">Cosmic Order & Righteous Authority</div>
+                  <div class="wkTags">
+                    <span class="tag">Auset: Maat through love</span>
+                    <span class="tag">Ileke: Shango (truth)</span>
+                    <span class="tag">Eshu: consequence & justice</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wRight">
+                <label class="chk"><input type="checkbox" data-week="8" /> Complete</label>
+              </div>
+            </summary>
+            <div class="weekBody">
+              <div class="soft">
+                <b>Public Focus</b>
+                <ul>
+                  <li><b>Theme:</b> live what you know; embody truth and fairness.</li>
+                  <li><b>Color inspiration:</b> red / white (power + integrity).</li>
+                  <li><b>Season:</b> summer (full expression of character).</li>
+                </ul>
+              </div>
+              <div class="cols">
+                <div class="soft">
+                  <b>Daily Practice</b>
+                  <ul>
+                    <li>Truth inventory: one honest correction daily.</li>
+                    <li>Write: “Where must I be more consistent?”</li>
+                    <li>Offer service: one helpful act with no publicity.</li>
+                  </ul>
+                </div>
+                <div class="soft">
+                  <b>Eshu Accountability</b>
+                  <ul>
+                    <li>Truth without cruelty; firmness without ego.</li>
+                    <li>Accept feedback. Correct course quickly.</li>
+                    <li>Justice begins with self-discipline.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <div class="soft" style="margin-top:12px">
+            <b>Public Completion (Suggested)</b>
+            <ul>
+              <li>Write a one-page reflection: “How my character changed in 8 weeks.”</li>
+              <li>Choose one principle to repeat for 30 days.</li>
+              <li>If you want priest-guided work, request a private consultation.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footline">SwamiG Institute • Ifá • Isésé • Orisha • Khemetian Studies</div>
+      <div class="tiny">Public education page. No ritual instructions are provided. Practice responsibly.</div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const KEY = "sgi_auset_ileke_8wk_progress_v1";
+      const boxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-week]'));
+      const pctLabel = document.getElementById("pctLabel");
+      const resetBtn = document.getElementById("resetBtn");
+
+      function load(){
+        try{
+          const raw = localStorage.getItem(KEY);
+          const data = raw ? JSON.parse(raw) : {};
+          boxes.forEach(b => {
+            const wk = b.getAttribute("data-week");
+            b.checked = !!data[wk];
+          });
+          updatePct();
+        }catch(e){
+          updatePct();
+        }
+      }
+
+      function save(){
+        const data = {};
+        boxes.forEach(b => {
+          const wk = b.getAttribute("data-week");
+          data[wk] = b.checked ? 1 : 0;
+        });
+        try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+        updatePct();
+      }
+
+      function updatePct(){
+        const total = boxes.length || 8;
+        const done = boxes.filter(b => b.checked).length;
+        const pct = Math.round((done / total) * 100);
+        pctLabel.textContent = pct + "% complete";
+      }
+
+      boxes.forEach(b => b.addEventListener("change", save));
+      resetBtn.addEventListener("click", () => {
+        boxes.forEach(b => b.checked = false);
+        try{ localStorage.removeItem(KEY); }catch(e){}
+        updatePct();
+      });
+
+      load();
+    })();
+  </script>
+</body>
+</html>
